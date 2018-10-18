@@ -3,9 +3,10 @@ using System.Collections;
 
 public class Canon : MonoBehaviour {
 	public GameObject satellite;
-	AudioSource thwing;
+	AudioSource audioSource;
+	public AudioClip thwing;
 	Animator animator;
-	float speed = .5f;
+	float speed = .2f;
 	Vector3 offset = new Vector3(.15f, 0 , -.15f);
 
 	double fireTimerLength = .25,
@@ -15,7 +16,7 @@ public class Canon : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		animator = GetComponent<Animator> ();
-		thwing = GetComponent<AudioSource> ();
+		audioSource = GetComponent<AudioSource> ();
 	}
 	
 	// Update is called once per frame
@@ -40,11 +41,11 @@ public class Canon : MonoBehaviour {
 				// start animation
 				animator.SetBool ("isFiring", true);
 				// play audio
-				audio.PlayOneShot (thwing.clip);
+				audioSource.PlayOneShot (thwing);
 
 				GameObject satelliteClone = (GameObject)Instantiate(satellite, transform.position + offset, transform.rotation);
-				satelliteClone.rigidbody.velocity = transform.forward * (speed * force);
-
+				//satelliteClone.rigidbody.velocity = transform.forward * (speed * force);
+				satelliteClone.GetComponent<Rigidbody>().velocity = transform.forward * (speed * force);
 			}
 		}
 	}

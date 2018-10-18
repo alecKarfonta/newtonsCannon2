@@ -14,7 +14,8 @@ public class SatelliteController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		transform.rigidbody.AddForce((gravityPoint - transform.position).normalized );
+		
+		transform.GetComponent<Rigidbody>().AddForce((gravityPoint - transform.position).normalized );
 		//transform.rotation = Quaternion.Lerp (transform.rotation, targetRotation, Time.deltaTime * 6f );
 		transform.Rotate(0,0,6.0f*rotationsPerMinute*Time.deltaTime);
 	}
