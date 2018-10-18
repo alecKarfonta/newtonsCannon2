@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+// TODO: Add friction to earth so that while rotating the fallen satellites stay in place
+
 public class Canon : MonoBehaviour {
 	public GameObject satellite;
 	AudioSource audioSource;
@@ -30,21 +32,26 @@ public class Canon : MonoBehaviour {
 				animator.SetBool ("isFiring", false);
 			}
 		}
-		// if space is down
+		// If user hit space or clicked the mouse
 		if (Input.GetKey (KeyCode.Space) || Input.GetButtonDown("Fire1")) {
 
 			// if is not already firing, start firing
 			if (!isFiring) {
+				// Get force value from slider
 				float force = GameObject.Find ("ForceSlider").GetComponent<UnityEngine.UI.Slider> ().value;
 				Debug.Log ("Fire! "  + force);
 				isFiring = true;
-				// start animation
+				// Start cannon animation
 				animator.SetBool ("isFiring", true);
+
+				// TODO: Set volume based on force
+
 				// play audio
 				audioSource.PlayOneShot (thwing);
 
+				// Instantiate new satellite
 				GameObject satelliteClone = (GameObject)Instantiate(satellite, transform.position + offset, transform.rotation);
-				//satelliteClone.rigidbody.velocity = transform.forward * (speed * force);
+				// Set velocty on satellite
 				satelliteClone.GetComponent<Rigidbody>().velocity = transform.forward * (speed * force);
 			}
 		}
